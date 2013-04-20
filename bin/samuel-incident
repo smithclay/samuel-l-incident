@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'slop'
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/generator.rb'))
+
+DEFAULT_INCIDENTS = 100
+
+opts = Slop.parse(help: true) do
+  banner 'Usage: samuel-incident [options]'
+  
+  on :s, :service=, 'service guid'
+  on :h, :host=, 'host'
+  on :n, :number=, 'number of incidents', as: Integer
+end
+
+if opts[:service].nil?
+	puts 'service guid required, see --help for options.'
+	Process.exit!(true)
+end
+
+if opts[:host].nil?
+	puts 'host required, see --help for options.'
+	Process.exit!(true)
+end
+
+options_hash = opts.to_hash
+
+event_creator = EventCreator.new(options_hash[:host], options_hash[:service], options_hash[:number])
+puts event_creator.post
