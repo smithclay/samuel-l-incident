@@ -10,7 +10,7 @@ class EventCreator
 
   attr_accessor :service_key, :base_uri
 
-  def initialize(host, service, number)
+  def initialize(host, service)
     @service_key = service
     @base_uri = host
   end
