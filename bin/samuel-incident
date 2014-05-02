@@ -6,9 +6,9 @@ DEFAULT_INCIDENTS = 100
 
 opts = Slop.parse(help: true) do
   banner 'Usage: samuel-incident [options]'
-  
+
   on :s, :service=, 'service guid'
-  on :h, :host=, 'host'
+  on :d, :domain=, 'host'
   on :n, :number=, 'number of incidents', as: Integer
 end
 
@@ -17,15 +17,10 @@ if opts[:service].nil?
 	Process.exit!(true)
 end
 
-if opts[:host].nil?
-	puts 'host required, see --help for options.'
-	Process.exit!(true)
-end
-
 options_hash = opts.to_hash
 number_of_times = options_hash[:number] || 1
 
-event_creator = EventCreator.new(options_hash[:host], options_hash[:service])
+event_creator = EventCreator.new(options_hash[:host] || 'https://events.pagerduty.com/', options_hash[:service])
 puts "Creating #{number_of_times} incident(s)..."
 for i in 0...number_of_times
 	puts event_creator.post

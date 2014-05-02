@@ -28,10 +28,9 @@ class EventCreator
   end
 
   def post
-    puts "POSTing to #{@base_uri}..."
-  	self.class.post(URI.join(@base_uri, '/generic/2010-04-15/create_event.json').to_s, {
-      :body => generate_event 
-  	})
+    uri = URI.join(@base_uri, '/generic/2010-04-15/create_event.json')
+    puts "POSTing to #{uri.to_s}..."
+    self.class.post(uri.to_s, { :body => generate_event })
   end
 
 end
