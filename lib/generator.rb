@@ -21,6 +21,13 @@ class EventCreator
     { :service_key => @service_key,
       :event_type => 'trigger',
       :description => bacon.sentence,
+      :contexts => [
+        {
+          'href' => 'https://www.youtube.com/watch?v=oUltheRpJNw',
+          'type' => 'image',
+          'src' => 'http://www.placecage.com/gif/300/180'
+        }
+      ],
       :details => {
         :quote => sam.paragraph
       }
