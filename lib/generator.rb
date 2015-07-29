@@ -1,6 +1,7 @@
 require 'blasphemy'
 require 'httparty'
 require 'json'
+require 'faker'
 
 class EventCreator
   include HTTParty
@@ -10,26 +11,30 @@ class EventCreator
 
   attr_accessor :service_key, :base_uri
 
-  def initialize(host, service)
+  def initialize(host, service, safe_for_work)
     @service_key = service
     @base_uri = host
+    @sfw = safe_for_work
   end
 
   def generate_event
     bacon = Faker::BaconIpsum.new
+    hacker = Faker::Hacker
     sam = Faker::SamuelLIpsum.new
     { :service_key => @service_key,
       :event_type => 'trigger',
-      :description => bacon.sentence,
+      :description => hacker.say_something_smart,
       :contexts => [
         {
-          'href' => 'https://www.youtube.com/watch?v=oUltheRpJNw',
-          'type' => 'image',
-          'src' => 'http://www.placecage.com/gif/300/180'
+          'href' => 'http://www.pagerduty.com',
+          'type' => 'link',
+          'text' => 'Incident Report'
         }
       ],
       :details => {
-        :quote => sam.paragraph
+        :mac_address => Faker::Internet.mac_address,
+        :ip_addr => Faker::Internet.ip_v4_address,
+        :quote => @sfw ? bacon.paragraph : sam.paragraph
       }
     }.to_json
   end
