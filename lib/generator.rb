@@ -29,6 +29,10 @@ class EventCreator
           'href' => 'http://www.pagerduty.com',
           'type' => 'link',
           'text' => 'Incident Report'
+        },
+        {
+          'type' => 'image',
+          'src' => 'https://chart.googleapis.com/chart?chs=451x180&chd=t:1,2,3,5,8,13,7&cht=lc&chds=a&chxt=y&chm=D,0033FF,0,0,5,1%22'
         }
       ],
       :details => {
